@@ -1,7 +1,7 @@
 
 
 async function main() {
-  const HelloWorld = await ethers.getContractFactory("HelloWorld");
+  const HelloWorld = await hre.ethers.getContractFactory("HelloWorld");
   console.log("Deploying Contract...")
   const helloWorld = await HelloWorld.deploy("Hello World! Bingo");
   const txHash = helloWorld.deployTransaction.hash;
