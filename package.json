@@ -1,25 +1,3 @@
 {
-  "name": "helloworld",
-  "version": "1.0.0",
-  "description": "CREATE AND DEPLOY HL_WRLD ON SEPOLIA - METASCHOOL",
-  "main": "hardhat.config.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jonas-sebera/HL-WRLD.git"
-  },
-  "author": "@Jonas-sebera",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Jonas-sebera/HL-WRLD/issues"
-  },
-  "homepage": "https://github.com/Jonas-sebera/HL-WRLD#readme",
-  "devDependencies": {
-    "hardhat": "^2.19.0"
-  }
+  "name": "hardhat-project"
 }
