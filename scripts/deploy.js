@@ -1,19 +1,21 @@
-
-
-async function main() {
+const main = async () => {
   const HelloWorld = await hre.ethers.getContractFactory("HelloWorld");
-  console.log("Deploying Contract...")
-  const helloWorld = await HelloWorld.deploy("Hello World! Bingo");
-  const txHash = helloWorld.deployTransaction.hash;
-  const txReceipt = await ethers.provider.waitForTransaction(txHash);
-  console.log("Contract deployed to address:",  txReceipt.contractAddress.target);
+  const helloWorld = await HelloWorld.deploy();
+   
+  // await transactions.deployed();
+
+  console.log("Transactions deployed to: ", helloWorld.target);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
+const runMain = async () => {
+  try {
+    await main();
+    process.exit(0);
+  } catch (error) {
+    console.error("Error deploying contract:", error);
     process.exit(1);
-  });
+  }
+}
+
+runMain();
+
