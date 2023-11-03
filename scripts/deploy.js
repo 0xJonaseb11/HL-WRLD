@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // We require the Hardhat Runtime Environment explicitly here. This is optional
 // but useful for running the script in a standalone fashion through `node <script>`.
 //
@@ -31,3 +32,26 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+=======
+const main = async () => {
+  const HelloWorld = await hre.ethers.getContractFactory("HelloWorld");
+  const helloWorld = await HelloWorld.deploy();
+   
+  // await transactions.deployed();
+
+  console.log("Transactions deployed to: ", helloWorld.target);
+}
+
+const runMain = async () => {
+  try {
+    await main();
+    process.exit(0);
+  } catch (error) {
+    console.error("Error deploying contract:", error);
+    process.exit(1);
+  }
+}
+
+runMain();
+
+>>>>>>> 7270cc338ff117272c912591ada01e5c0d9a5e2b
