@@ -6,6 +6,10 @@ contract HelloWorld {
     //states
     //functions
 
+    //errors
+    error HelloWorld__MessageSendFailed();
+    error HelloWorld__NoSuccess();
+
     event MessageChanged(string oldMsg, string newMsg);
 
     string public message;
