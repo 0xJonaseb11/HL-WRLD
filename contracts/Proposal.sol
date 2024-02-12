@@ -6,6 +6,7 @@ contract ProposalContract {
     // state variables
     uint256 public counter;
     address owner;
+    address[] private votedAddresses;
 
     struct Proposal {
      string description;
@@ -23,13 +24,27 @@ contract ProposalContract {
     // constructor
     constructor () {
         owner == msg.sender;
+        votedAddresses.push(msg.sender);
     }
 
-    // modifier
+    // modifier - sender
     modifier onlyOwner() {
         require(owner == msg.sender, "You must be the owner to call this function");
         _;
     }
+
+    // modifier - active status
+    modifier active () {
+        require(proposal_history[counter].is_active == true, "The proposal is not active");
+        _;
+    }
+
+    // modifier - newVoter
+    modifier newVoter(address _address) {
+        require(!isVoted(_address), "Voter has already voted for this proposal");
+        _;
+    }
+
 
     // create proposal
     function create(string calldata _description, string memory _title, uint256 _total_vote_to_end)external {
@@ -52,23 +67,27 @@ contract ProposalContract {
     function vote(uint8 choice) external {
         Proposal storage proposal = proposal_history[counter];
         uint256 total_vote = proposal.approve + proposal.reject + proposal.pass;
+        votedAddresses.push(msg.sender);
 
          // validate with values[1, 2, 0]
         if (choice == 1) {
-        proposal.approve += 1;
-        proposal.current_state = calculateCurrentState();
+
+           proposal.approve += 1;
+           proposal.current_state = calculateCurrentState();
         } 
         else if (choice == 2) {
-        proposal.reject += 1;
-        proposal.current_state = calculateCurrentState();
-        } else if (choice == 0) {
-        proposal.pass += 1;
-        proposal.current_state == calculateCurrentState();
+            proposal.reject += 1;
+            proposal.current_state = calculateCurrentState();
+        } 
+        else if (choice == 0) {
+            proposal.pass += 1;
+            proposal.current_state == calculateCurrentState();
         }
 
         // END proposal if sent
        if ((proposal.total_vote_to_end - total_vote) && (choice == 1 || choice == 2 || choice == 0)) {
-        proposal.is_active = false;
+          proposal.is_active = false;
+          votedAddresses = [owner];
        }
     }   
    
