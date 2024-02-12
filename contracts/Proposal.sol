@@ -5,6 +5,7 @@ contract ProposalContract {
 
     // state variables
     uint256 public counter;
+    address owner;
 
     struct Proposal {
      string description;
@@ -19,9 +20,57 @@ contract ProposalContract {
 
     mapping(uint256 => Proposal) proposal_history;
 
+    // constructor
+    constructor () {
+        owner == msg.sender;
+    }
+
+    // modifier
+    modifier onlyOwner() {
+        require(owner == msg.sender, "You must be the owner to call this function");
+        _;
+    }
+
     // create proposal
     function create(string calldata _description, string memory _title, uint256 _total_vote_to_end)external {
         counter += 1;
         proposal_history[counter] = Proposal(_description, _title, 0, 0, 0, _total_vote_to_end, false, true);
     }
+
+    // set new owner
+    function setOwner(address new_owner) external onlyOwner {
+        owner = new_owner;
+    } 
+
+    // start voting
+    /**
+    *@dev Approve -> will be represented by 1.
+    * Reject -> will be represented by 2.
+    * Pass -> will be represented by 0. 
+    */
+
+    function vote(uint8 choice) external {
+        Proposal storage proposal = proposal_history[counter];
+        uint256 total_vote = proposal.approve + proposal.reject + proposal.pass;
+
+         // validate with values[1, 2, 0]
+        if (choice == 1) {
+        proposal.approve += 1;
+        proposal.current_state = calculateCurrentState();
+        } 
+        else if (choice == 2) {
+        proposal.reject += 1;
+        proposal.current_state = calculateCurrentState();
+        } else if (choice == 0) {
+        proposal.pass += 1;
+        proposal.current_state == calculateCurrentState();
+        }
+
+        // END proposal if sent
+       if ((proposal.total_vote_to_end - total_vote) && (choice == 1 || choice == 2 || choice == 0)) {
+        proposal.is_active = false;
+       }
+    }   
+   
+  
 }
