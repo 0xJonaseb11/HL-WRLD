@@ -139,4 +139,29 @@ contract ProposalContract {
             return pass % 2 == 1;
         }
     }  
+
+    // terminate proposal
+    function terminateProposal() external onlyOwner active {
+        proposal_history[counter].is_active == false;
+    }
+
+    // check if address voted 
+    function isVoted(address _address) public view returns(bool) {
+        for (uint i = 0; i < votedAddresses.length; i++) {
+            if (votedAddresses[i] == _address) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // retrieve the current proposal
+    function getCurrentProposal() external view returns(Proposal memory) {
+        return proposal_history[counter];
+    }
+
+    // retrieve a specifi proposal
+    function getProposal(uint256 proposalId) external view returns(Proposal memory) {
+        return proposal_history[proposalId];
+    }
 }
