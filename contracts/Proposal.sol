@@ -111,6 +111,32 @@ contract ProposalContract {
             return false;
         }
     }
-   
-  
+
+    /** calculate current state - alternative logic
+    * @dev If the approve is greater that reject,
+    * the proposal is approved
+    *
+    * If the reject is greater that approve, the proposal is rejected
+    *
+    *If the number of approves and rejects are equal,
+    *the proposal passes
+    */
+
+    function calculateCurrentState(uint256 _proposalId) private view returns(bool){
+        Proposal storage proposal = proposal_history[_proposalId];
+
+        uint256 approve = proposal.approve;
+        uint256 reject = proposal.reject;
+        uint256 pass = proposal.pass;
+
+
+        // logic
+        if (approve > reject) {
+            return true;
+        } else if (approve < reject) {
+            return false;
+        } else {
+            return pass % 2 == 1;
+        }
+    }  
 }
