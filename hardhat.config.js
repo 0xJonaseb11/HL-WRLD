@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("@nomiclabs/hardhat-ethers");
+
 const { PRIVATE_KEY } = process.env;
 module.exports = {
   solidity: "0.8.19",
