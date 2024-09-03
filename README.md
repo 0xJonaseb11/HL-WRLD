@@ -1,8 +1,8 @@
 # HL_WRLD
 
-_**Author: @Jaz-3-0**_
+## About
 
-## Be able to create, and deploy hello World soldity smart contract on sepolia
+Be able to create, and deploy hello World soldity smart contract on sepolia
 
 ### Sample Hardhat Project
 
@@ -20,4 +20,4 @@ npx hardhat run scripts/deploy.js
 
 ----------
 
-@Jaz-3-0
+@0xJonaseb11
